@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>President's College Minuwangoda </title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="icon" href="image/pcmlogo.jpg">
+  <link rel="stylesheet" href="style.css">
+  
+  <style>
+    
+    body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      background-color: white;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      text-align: center;
+     color: rgb(163, 24, 24);
+    
+    }
+
+    header img {
+      width: 70px;
+      margin-right: 15px;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+    }
+
+ 
+</style>
+
+
+</head>
+<body>
+  <header>
+    <img src="image/Presidents_College_-_Minuwangoda_Logo.jpg" alt="PCM Logo">
+    <h1>President's College Minuwangoda</h1>
+  </header>
+
+  <div class="container">
+
+    <h1>Student Progress & Achievements</h1>
+
+    <main>
+        <section class="student-form">
+            <h2>Add Student Progress</h2><br>
+            <form id="studentForm">
+                <input type="text" id="name" placeholder="Student Name" required>
+                <input type="text" id="subject" placeholder="Subject" required>
+                <input type="text" id="grade" placeholder="Grade" required>
+                <input type="text" id="achievement" placeholder="Achievement" required>
+                <button type="submit">Add</button>
+            </form>
+        </section>
+        <section class="student-list">
+            <h2>Student Records</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Subject</th>
+                        <th>Grade</th>
+                        <th>Achievement</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="studentTableBody"></tbody>
+            </table>
+        </section>
+    </main>
+</div>
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+    const studentForm = document.getElementById("studentForm");
+    const studentTableBody = document.getElementById("studentTableBody");
+
+   
+    let students = JSON.parse(localStorage.getItem("students")) || [];
+    students.forEach(addStudentRow);
+
+    //  form submission
+    studentForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById("name").value;
+        const subject = document.getElementById("subject").value;
+        const grade = document.getElementById("grade").value;
+        const achievement = document.getElementById("achievement").value;
+
+        const student = { name, subject, grade, achievement };
+
+        // Confirm addition with SweetAlert
+        Swal.fire({
+            title: 'Add Student?',
+            text: `Are you sure you want to add ${name}?`,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, add!',
+            cancelButtonText: 'No, cancel',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                students.push(student);
+                localStorage.setItem("students", JSON.stringify(students));
+
+                addStudentRow(student);
+                studentForm.reset();
+
+                Swal.fire('Added!', `${name} has been added successfully.`, 'success');
+            }
+        });
+    });
+
+   
+    function addStudentRow(student) {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${student.name}</td>
+            <td>${student.subject}</td>
+            <td>${student.grade}</td>
+            <td>${student.achievement}</td>
+            <td><button class="delete-btn">Delete</button></td>
+        `;
+
+        const deleteButton = row.querySelector(".delete-btn");
+        deleteButton.addEventListener("click", () => deleteStudent(row, student));
+
+        studentTableBody.appendChild(row);
+    }
+
+    // Delete a student row
+    function deleteStudent(row, student) {
+        Swal.fire({
+            title: 'Delete Student?',
+            text: `Are you sure you want to delete ${student.name}?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete!',
+            cancelButtonText: 'No, keep it',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const index = Array.from(studentTableBody.children).indexOf(row);
+
+                students.splice(index, 1);
+                localStorage.setItem("students", JSON.stringify(students));
+
+                row.remove();
+
+                Swal.fire('Deleted!', `${student.name} has been deleted successfully.`, 'success');
+            }
+        });
+    }
+});
+
+
+</script>
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</body>
+
+</html>
