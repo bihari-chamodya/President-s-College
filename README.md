@@ -33,6 +33,7 @@ ensures secure password handling with the bcrypt library.
 
 Open-Source Libraries and Frameworks Used
 
+
 1. CustomTkinter
 • Purpose: Provides a modern and customizable GUI framework based on tkinter.
 It enhances the look and feel of traditional GUIs and offers additional customization
@@ -96,5 +97,7 @@ CSS & JS
 
 
 Backend: Python 
+
 Frontend: HTML, CSS, JavaScript
+
 Database: SQLite3 (admin.db , users.db)
