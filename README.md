@@ -3,7 +3,7 @@
   Project Documentation
   
 
-    *Note:* GitHub does not support hosting Python code, but this repository contains all files, including student and admin login systems.
+   *Note:* GitHub does not support hosting Python code, but this repository contains all files, including student and admin login systems.
 
 
  project Structure
