@@ -2,7 +2,8 @@
  
   Project Documentation
 
- project Structure 
+ project Structure
+ 
 project-folder/
 │── static/
 │   ├── css/
