@@ -81,12 +81,14 @@ interfaces.
 using customtkinter.
 
 ALERT
+
 8. SweetAlert2
 • Purpose: Used to display stylish and customizable alert dialogs in the project.
 • Website: SweetAlert2
 • License: MIT License
 
 CSS & JS
+
 9. Bootstrap
 • Purpose: Provides responsive design and prebuilt CSS and JavaScript components.
 • Website: Bootstrap
